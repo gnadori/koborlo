@@ -20,16 +20,11 @@ export default function Navbar({
           <Compass className="w-6 h-6 text-white animate-spin-slow" />
         </div>
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-black tracking-wider text-lg md:text-xl bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
-              KÓBORLÓ
-            </h1>
-            <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              Kárpát-medence
-            </span>
-          </div>
-          <p className="hidden md:block text-[11px] text-slate-300">
-            Földrajzi kvízjáték • 5 körös kaland
+          <h1 className="font-black tracking-wide text-lg md:text-xl bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
+            Kóborlás a Kárpát-medencében
+          </h1>
+          <p className="text-xs font-semibold text-emerald-400 tracking-wide">
+            AKG - Kutatók Éjszakája
           </p>
         </div>
       </div>
@@ -88,10 +83,11 @@ export default function Navbar({
 
         <button
           onClick={onOpenRules}
-          title="Szabályok és leírás"
-          className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/10 transition-colors"
+          title="Használat leírása és segítség"
+          className="px-3 py-1.5 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 hover:text-white border border-emerald-500/40 transition-all flex items-center gap-1.5 text-xs font-bold shadow-md cursor-pointer"
         >
-          <HelpCircle className="w-4 h-4" />
+          <HelpCircle className="w-4 h-4 text-emerald-400" />
+          <span>Súgó / Útmutató</span>
         </button>
 
         <button

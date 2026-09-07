@@ -108,11 +108,11 @@ export default function App() {
             <Compass className="absolute inset-0 m-auto w-8 h-8 text-emerald-400 animate-pulse" />
           </div>
           <div className="text-center">
-            <h2 className="text-2xl font-black tracking-wider bg-gradient-to-r from-emerald-300 to-teal-200 bg-clip-text text-transparent">
-              KÓBORLÓ
+            <h2 className="text-2xl font-black tracking-wide bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
+              Kóborlás a Kárpát-medencében
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Kárpát-medencei helyszínek előkészítése (2 kurált + 3 random pont)...
+            <p className="text-xs font-semibold text-emerald-400 mt-1">
+              AKG - Kutatók Éjszakája • Helyszínek előkészítése...
             </p>
           </div>
         </div>
