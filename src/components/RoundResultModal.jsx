@@ -130,50 +130,52 @@ export default function RoundResultModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-white/15 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="bg-slate-900 border border-white/15 rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl flex flex-col max-h-[94vh]">
         
         {/* Fejléc: pontszám és távolság */}
-        <div className="p-4 md:p-6 bg-gradient-to-b from-slate-800 to-slate-900 border-b border-white/10 text-center relative">
+        <div className="p-6 bg-gradient-to-b from-slate-800 to-slate-900 border-b border-white/10 text-center relative">
           <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">
             {roundNumber}. Kör összefoglalása
           </div>
 
-          <div className="flex items-center justify-center gap-6 my-2">
+          <div className="flex items-center justify-center gap-8 my-2">
             <div>
-              <span className="text-xs text-slate-400 block font-medium">Távolság</span>
-              <span className="text-2xl md:text-3xl font-black text-white">
+              <span className="text-xs text-slate-400 block font-medium">Távolság a céltól</span>
+              <span className="text-3xl font-black text-white">
                 {formatDistance(distanceKm)}
               </span>
             </div>
 
-            <div className="h-10 w-px bg-white/10" />
+            <div className="h-12 w-px bg-white/10" />
 
             <div>
               <span className="text-xs text-slate-400 block font-medium">Szerzett pont</span>
-              <span className={`text-2xl md:text-3xl font-black bg-gradient-to-r ${getScoreColor()} bg-clip-text text-transparent`}>
+              <span className={`text-3xl font-black bg-gradient-to-r ${getScoreColor()} bg-clip-text text-transparent`}>
                 +{formatScore(score)}
               </span>
             </div>
           </div>
 
           {/* Helyszín adatai (név és leírás) */}
-          <div className="mt-3 p-3 rounded-xl bg-slate-800/80 border border-white/10 text-left">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
-              <MapPin className="w-4 h-4 shrink-0" />
+          <div className="mt-4 p-4 rounded-xl bg-slate-800/80 border border-white/10 text-left">
+            <div className="flex items-center gap-2 text-emerald-400 font-bold text-base">
+              <MapPin className="w-5 h-5 shrink-0" />
               <span>{location.title || 'Kárpát-medencei helyszín'}</span>
-              <span className="text-xs font-normal text-slate-400 ml-auto">{location.region}</span>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 ml-auto">
+                {location.region}
+              </span>
             </div>
             {location.description && (
-              <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
+              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
                 {location.description}
               </p>
             )}
           </div>
         </div>
 
-        {/* Eredmény Térkép konténer */}
-        <div className="relative w-full h-[280px] md:h-[350px] bg-slate-950">
+        {/* Eredmény Térkép konténer (asztali monitorra méretezve) */}
+        <div className="relative w-full h-[420px] bg-slate-950">
           <div ref={mapContainerRef} className="w-full h-full" />
         </div>
 

@@ -145,31 +145,31 @@ export default function GameSummaryModal({ roundsHistory, totalScore, onRestartG
   const rank = getRank(totalScore);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-slate-950/85 backdrop-blur-lg animate-in fade-in duration-300">
-      <div className="bg-slate-900 border border-white/15 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/85 backdrop-blur-lg animate-in fade-in duration-300">
+      <div className="bg-slate-900 border border-white/15 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl flex flex-col max-h-[94vh]">
         
         {/* Fejléc */}
-        <div className="p-5 md:p-6 bg-gradient-to-b from-slate-800 to-slate-900 border-b border-white/10 text-center relative">
+        <div className="p-6 bg-gradient-to-b from-slate-800 to-slate-900 border-b border-white/10 text-center relative">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-2 border border-emerald-500/30">
-            <Trophy className="w-3.5 h-3.5" />
+            <Trophy className="w-4 h-4" />
             <span>Játék Befejezve</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-amber-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-black bg-gradient-to-r from-amber-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
             {formatScore(totalScore)} / 25 000 pont
           </h2>
 
           <div className="mt-2">
-            <h3 className="text-lg font-extrabold text-white">{rank.title}</h3>
-            <p className="text-xs text-slate-300">{rank.desc}</p>
+            <h3 className="text-xl font-extrabold text-white">{rank.title}</h3>
+            <p className="text-sm text-slate-300">{rank.desc}</p>
           </div>
         </div>
 
-        {/* Középső tartalom: Térkép + Körök bontása */}
-        <div className="flex-1 overflow-y-auto flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-white/10">
+        {/* Középső tartalom: Térkép + Körök bontása (Asztali monitorra méretezve) */}
+        <div className="flex-1 overflow-y-auto flex flex-row divide-x divide-white/10">
           
           {/* Térkép összefoglaló */}
-          <div className="h-[220px] md:h-auto md:w-1/2 bg-slate-950 relative min-h-[220px]">
+          <div className="w-1/2 bg-slate-950 relative min-h-[420px]">
             <div ref={mapContainerRef} className="w-full h-full" />
           </div>
 

@@ -128,10 +128,10 @@ export default function GuessMap({ onMakeGuess, disabled }) {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`absolute right-4 bottom-4 z-20 transition-all duration-300 ease-out flex flex-col items-end ${
+      className={`absolute right-6 bottom-6 z-20 transition-all duration-300 ease-out flex flex-col items-end ${
         activeExpanded
-          ? 'w-[90vw] sm:w-[480px] md:w-[580px] h-[360px] md:h-[440px]'
-          : 'w-[240px] sm:w-[280px] h-[170px]'
+          ? 'w-[660px] h-[480px]'
+          : 'w-[320px] h-[220px]'
       }`}
     >
       {/* Térkép Kártya */}
