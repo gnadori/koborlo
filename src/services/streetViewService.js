@@ -189,24 +189,30 @@ export async function generateGameRounds() {
   const rounds = [];
   const hasApiKey = !!getGoogleMapsApiKey();
   
-  // 1. Két véletlenszerű kurált helyszín (1. és 2. kör)
+  // 1. Két véletlenszerű, garantáltan BEJÁRHATÓ (mozgatható) kurált helyszín kiválasztása (1. és 2. kör)
   const shuffledCurated = [...CURATED_LOCATIONS].sort(() => 0.5 - Math.random());
-  const selectedCurated = shuffledCurated.slice(0, 2);
 
-  for (let i = 0; i < selectedCurated.length; i++) {
-    const cur = selectedCurated[i];
+  for (const cur of shuffledCurated) {
+    if (rounds.length >= 2) break;
+
     let panoInfo = null;
-
     if (hasApiKey) {
       try {
-        panoInfo = await findNearestPanorama(cur.lat, cur.lng, 400, false);
-      } catch (e) {
-        console.warn('Nem sikerült kültéri panorámát illeszteni:', cur.title);
+        // Kizárólag olyan pontot fogadunk el, ahol vannak útkapcsolatok (requireLinks = true), nem magányos 360 gömb
+        panoInfo = await findNearestPanorama(cur.lat, cur.lng, 600, true);
+      } catch (e1) {
+        try {
+          // Ha 600m-en belül nem volt, 1200m-es körzetben próbáljuk megkeresni a kapcsolódó közutat
+          panoInfo = await findNearestPanorama(cur.lat, cur.lng, 1200, true);
+        } catch (e2) {
+          // Ha nincs a közelben bejárható közút, ezt a kurált pontot átugorjuk és a következőt nézzük meg!
+          continue;
+        }
       }
     }
 
     rounds.push({
-      roundNumber: i + 1,
+      roundNumber: rounds.length + 1,
       isCurated: true,
       roundType: 'curated',
       lat: panoInfo ? panoInfo.lat : cur.lat,

@@ -61,6 +61,11 @@ export default function StreetViewContainer({ location, onOpenSettings }) {
         } else {
           panoramaRef.current.setPosition(targetPos);
         }
+        panoramaRef.current.setOptions({
+          clickToGo: true,
+          linksControl: true,
+          showRoadLabels: false,
+        });
         panoramaRef.current.setPov(pov);
         panoramaRef.current.setVisible(true);
 
