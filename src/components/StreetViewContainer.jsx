@@ -44,18 +44,25 @@ export default function StreetViewContainer({ location, onOpenSettings }) {
             pov: pov,
             zoomControl: true,
             panControl: true,
+            clickToGo: true, // Szabad lépkedés / mozgás engedélyezése az utakon
+            linksControl: true, // Útirányt jelző fehér nyilak megjelenítése
             addressControl: false,
-            showRoadLabels: false, // Ne árulja el rögtön az utcanevet!
+            showRoadLabels: false, // Ne árulja el rögtön a pontos utcanevet
             motionTracking: false,
             motionTrackingControl: false,
             fullscreenControl: false,
             enableCloseButton: false,
+            source: maps.StreetViewSource.OUTDOOR, // Kizárólag kültéri közutak
           });
+        }
+
+        if (location.panoId) {
+          panoramaRef.current.setPano(location.panoId);
         } else {
           panoramaRef.current.setPosition(targetPos);
-          panoramaRef.current.setPov(pov);
-          panoramaRef.current.setVisible(true);
         }
+        panoramaRef.current.setPov(pov);
+        panoramaRef.current.setVisible(true);
 
         setLoading(false);
       } catch (err) {
@@ -77,7 +84,11 @@ export default function StreetViewContainer({ location, onOpenSettings }) {
   // Kezdő nézőpont visszaállítása
   const handleResetView = () => {
     if (panoramaRef.current && location) {
-      panoramaRef.current.setPosition({ lat: location.lat, lng: location.lng });
+      if (location.panoId) {
+        panoramaRef.current.setPano(location.panoId);
+      } else {
+        panoramaRef.current.setPosition({ lat: location.lat, lng: location.lng });
+      }
       panoramaRef.current.setPov({
         heading: location.heading || 0,
         pitch: location.pitch || 0,

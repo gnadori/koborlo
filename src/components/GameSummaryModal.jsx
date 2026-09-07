@@ -32,8 +32,9 @@ export default function GameSummaryModal({ roundsHistory, totalScore, onRestartG
       attributionControl: false,
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
     const allCoords = [];
@@ -107,7 +108,15 @@ export default function GameSummaryModal({ roundsHistory, totalScore, onRestartG
       map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] });
     }
 
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+      if (allCoords.length > 0) {
+        map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] });
+      }
+    }, 150);
+
     return () => {
+      clearTimeout(timer);
       map.remove();
     };
   }, [roundsHistory]);

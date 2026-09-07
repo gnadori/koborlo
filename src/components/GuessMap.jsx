@@ -54,10 +54,9 @@ export default function GuessMap({ onMakeGuess, disabled }) {
         attributionControl: false,
       });
 
-      // OpenStreetMap csemperéteg (CartoDB Positron / OSM)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors, &copy; CARTO',
-        subdomains: 'abcd',
+      // Hivatalos OpenStreetMap csemperéteg (100% ingyenes, nincs API kulcs hiba)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(map);
 

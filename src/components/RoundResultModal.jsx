@@ -24,8 +24,9 @@ export default function RoundResultModal({
       attributionControl: false,
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
     // Valódi célpont (zöld pin)
@@ -104,7 +105,16 @@ export default function RoundResultModal({
 
     mapInstanceRef.current = map;
 
+    // Késleltetett átméretezés a modal animáció után
+    const timer = setTimeout(() => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize();
+        mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      }
+    }, 150);
+
     return () => {
+      clearTimeout(timer);
       map.remove();
     };
   }, [location, guess]);
@@ -163,7 +173,7 @@ export default function RoundResultModal({
         </div>
 
         {/* Eredmény Térkép konténer */}
-        <div className="relative flex-1 min-h-[260px] md:min-h-[320px] bg-slate-950">
+        <div className="relative w-full h-[280px] md:h-[350px] bg-slate-950">
           <div ref={mapContainerRef} className="w-full h-full" />
         </div>
 

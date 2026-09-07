@@ -66,265 +66,215 @@ export function getRandomCarpathianPoint() {
     lat = minLat + Math.random() * (maxLat - minLat);
     lng = minLng + Math.random() * (maxLng - minLng);
     attempts++;
-    if (attempts > 500) break; // fallback védelmi korlát
+    if (attempts > 500) break;
   } while (!isInsideCarpathianBasin(lat, lng));
 
   return { lat, lng };
 }
 
 /**
- * Kurált helyszínek a Kárpát-medence változatos tájairól
- * Gondosan ellenőrzött koordinátákkal és érdekes tájékoztató szöveggel
+ * Kurált kültéri helyszínek a Kárpát-medence ikonikus tájairól
+ * Kizárólag KÜLTÉRI KÖZUTAK és KILÁTÓK, garantált Street View bejárhatósággal (nem szállodák/épületbelsők!)
  */
 export const CURATED_LOCATIONS = [
   {
     id: "cur-1",
-    title: "Visegrád – Fellegvár panoráma",
+    title: "Visegrád – Panoráma út a Dunakanyar felett",
     region: "Dunakanyar, Magyarország",
-    lat: 47.7937,
-    lng: 18.9808,
-    heading: 310,
-    pitch: -5,
-    description: "A Dunakanyar ikonikus látképe a visegrádi várból, ahonnan a folyó U-alakú kanyarulata és a Börzsöny hegyvonulata tárul elénk."
+    lat: 47.7946,
+    lng: 18.9804,
+    heading: 315,
+    pitch: 0,
+    description: "A Dunakanyar lélegzetelállító panorámája a visegrádi fellegvár alatti szerpentinről, a Börzsöny hegyeivel szemben."
   },
   {
     id: "cur-2",
-    title: "Tihanyi Apátság és Balaton",
+    title: "Tihanyi Pisky sétány a Balaton felett",
     region: "Balaton-felvidék, Magyarország",
-    lat: 46.9136,
-    lng: 17.8893,
+    lat: 46.9142,
+    lng: 17.8899,
     heading: 140,
     pitch: 0,
-    description: "Az 1055-ben alapított bencés apátság sétánya, csodálatos kilátással a Balaton keleti medencéjére."
+    description: "A tihanyi Bencés Apátság melletti panorámasétány, ahonnan belátni a Balaton keleti medencéjét és a füredi öblöt."
   },
   {
     id: "cur-3",
     title: "Békás-szoros (Cheile Bicazului)",
-    region: "Székelyföld / Neamț határ, Erdély",
+    region: "Gyergyói-havasok / Neamț, Erdély",
     lat: 46.8122,
     lng: 25.8276,
-    heading: 80,
+    heading: 85,
     pitch: 15,
-    description: "A Keleti-Kárpátok egyik leglátványosabb szurdokvölgye, több száz méteres függőleges mészkőfalak között kanyargó hegyi úttal."
+    description: "Kanyargós hegyi közút a Keleti-Kárpátok legszűkebb, több száz méteres függőleges mészkősziklái között."
   },
   {
     id: "cur-4",
     title: "Magas-Tátra – Csorba-tó (Štrbské Pleso)",
     region: "Szepesség, Felvidék (Szlovákia)",
-    lat: 49.1202,
-    lng: 20.0631,
-    heading: 10,
-    pitch: 10,
-    description: "A Kárpátok legmagasabb hegyvonulatának lábánál fekvő gleccsertó, 1346 méteres tengerszint feletti magasságban."
+    lat: 49.1195,
+    lng: 20.0620,
+    heading: 15,
+    pitch: 8,
+    description: "A gleccsertó partján húzódó sétaút, háttérben a Magas-Tátra hófödte csúcsaival."
   },
   {
     id: "cur-5",
     title: "Torockó és a Székelykő",
     region: "Torockói-hegység, Erdély",
-    lat: 46.4528,
-    lng: 23.5703,
-    heading: 65,
-    pitch: 15,
-    description: "Europa Nostra-díjas falu a Székelykő lábánál, ahol a hegy alakja miatt 'kétszer kel fel a nap'."
+    lat: 46.4518,
+    lng: 23.5708,
+    heading: 70,
+    pitch: 12,
+    description: "A híres erdélyi falu főutcája a monumentális Székelykő sziklafalának árnyékában."
   },
   {
     id: "cur-6",
-    title: "Hortobágyi Kilenclyukú híd",
+    title: "Hortobágyi Kilenclyukú híd (33-as főút)",
     region: "Hortobágyi Nemzeti Park, Magyarország",
     lat: 47.5818,
     lng: 21.1477,
     heading: 265,
     pitch: 0,
-    description: "A puszta jelképe, Magyarország leghosszabb kőhídja a Hortobágy folyó felett."
+    description: "A végtelen puszta és a klasszicista kőhíd látképe a Hortobágy folyó partján."
   },
   {
     id: "cur-7",
     title: "Kassa – Fő utca és a Szent Erzsébet-dóm",
     region: "Abaúj / Kassa, Felvidék (Szlovákia)",
-    lat: 48.7208,
-    lng: 21.2582,
-    heading: 180,
+    lat: 48.7205,
+    lng: 21.2575,
+    heading: 175,
     pitch: 10,
-    description: "Európa egyik legkeletibb gótikus katedrálisa és Rákóczi Ferenc nyughelye a pezsgő történelmi belvárosban."
+    description: "Európa egyik legkeletibb gótikus székesegyháza Kassa tágas, történelmi sétálóutcáján."
   },
   {
     id: "cur-8",
-    title: "Szabadka – Városháza",
+    title: "Szabadka – Városháza előtti tér",
     region: "Bácska / Vajdaság (Szerbia)",
-    lat: 46.1005,
-    lng: 19.6653,
-    heading: 320,
+    lat: 46.1002,
+    lng: 19.6650,
+    heading: 325,
     pitch: 5,
-    description: "A magyar szecesszió egyik remekműve, Komor Marcell és Jakab Dezső tervei alapján, Zsolnay kerámiákkal díszítve."
+    description: "A magyar szecesszió csodája, Komor és Jakab által tervezett Zsolnay-kerámiás műremek a főtéren."
   },
   {
     id: "cur-9",
-    title: "Munkácsi Vár (Palanok)",
-    region: "Kárpátalja (Ukrajna)",
-    lat: 48.4317,
-    lng: 22.6865,
-    heading: 205,
-    pitch: 12,
-    description: "A Latorca völgye felett magasodó vulkáni hegyen épült történelmi vár, Zrínyi Ilona hősies védelmének színhelye."
+    title: "Dévényi vár és a Duna–Morva összefolyás",
+    region: "Pozsony vidéke, Felvidék (Szlovákia)",
+    lat: 48.1738,
+    lng: 16.9790,
+    heading: 215,
+    pitch: 5,
+    description: "A Duna és a Morva folyó találkozásánál meredeken kiemelkedő sziklavár közútja."
   },
   {
     id: "cur-10",
-    title: "Segesvár – Óratorony és várnegyed",
-    region: "Küküllő mente, Erdély",
-    lat: 46.2195,
-    lng: 24.7928,
-    heading: 210,
-    pitch: 8,
-    description: "UNESCO Világörökségi középkori erődített város, épségben megmaradt tornyokkal és macskaköves sikátorokkal."
+    title: "Vajdahunyad vára előtti tér",
+    region: "Hunyad, Erdély",
+    lat: 45.7490,
+    lng: 22.8885,
+    heading: 335,
+    pitch: 10,
+    description: "A Hunyadiak lenyűgöző gótikus lovagvára a Zalasd patak hídja előtt állva."
   },
   {
     id: "cur-11",
-    title: "Fraknó vára (Burg Forchtenstein)",
-    region: "Rozália-hegység, Burgenland (Ausztria)",
-    lat: 47.7378,
-    lng: 16.3308,
-    heading: 240,
-    pitch: 10,
-    description: "Az Esterházy hercegek legendás fellegvára az egykori magyar-osztrák határon."
+    title: "Badacsony – Római út a bazalthegy lábánál",
+    region: "Tapolcai-medence, Magyarország",
+    lat: 46.7905,
+    lng: 17.4985,
+    heading: 210,
+    pitch: 3,
+    description: "Híres panorámaút a Balaton partján, a vulkáni bazalthegy szőlőültetvényei között."
   },
   {
     id: "cur-12",
-    title: "Lillafüred – Palotaszálló és a Hámori-tó",
-    region: "Bükk-vidék, Magyarország",
-    lat: 48.1044,
-    lng: 20.6225,
-    heading: 250,
-    pitch: 5,
-    description: "A Bükk-hegység mélyén fekvő neoreneszánsz Palotaszálló a Hámori-tó és a Szinva-vízesés szomszédságában."
+    title: "Esztergomi Víziváros és a Duna-part",
+    region: "Pilis / Esztergom, Magyarország",
+    lat: 47.7975,
+    lng: 18.7360,
+    heading: 80,
+    pitch: 12,
+    description: "A Várhegy tetején magasodó Bazilika a Duna-parti sétányról és a Mária Valéria híd környékéről."
   },
   {
     id: "cur-13",
-    title: "Dévényi vár és a Morva torkolata",
-    region: "Kis-Kárpátok / Pozsony pereme, Felvidék",
-    lat: 48.1741,
-    lng: 16.9785,
-    heading: 215,
-    pitch: 5,
-    description: "A Duna és a Morva összefolyásánál magasodó sziklavár, a történelmi Magyar Királyság nyugati kapuja."
-  },
-  {
-    id: "cur-14",
-    title: "Vajdahunyadi vár (Castelul Corvinilor)",
-    region: "Hunyad, Erdély",
-    lat: 45.7495,
-    lng: 22.8883,
-    heading: 330,
-    pitch: 10,
-    description: "A Hunyadiak lenyűgöző gótikus és reneszánsz lovagvára a Zalasd vize felett."
-  },
-  {
-    id: "cur-15",
-    title: "Esztergomi Bazilika és Duna-part",
-    region: "Pilis / Duna-kanyar, Magyarország",
-    lat: 47.7989,
-    lng: 18.7358,
-    heading: 75,
-    pitch: 10,
-    description: "Magyarország legnagyobb egyházi épülete a Várhegyen, kilátással a Mária Valéria hídra és Párkányra."
-  },
-  {
-    id: "cur-16",
-    title: "Kopácsi-rét Természetvédelmi Park",
-    region: "Drávaszög / Baranya (Horvátország)",
-    lat: 45.6268,
-    lng: 18.7891,
-    heading: 105,
-    pitch: 0,
-    description: "A Duna és a Dráva összefolyásának egyedülálló ártéri vadonja és madárparadicsoma."
-  },
-  {
-    id: "cur-17",
-    title: "Pécs – Széchenyi tér és a Gázi Kászim pasa dzsámija",
-    region: "Mecsek / Baranya, Magyarország",
-    lat: 46.0772,
-    lng: 18.2284,
-    heading: 20,
-    pitch: 8,
-    description: "A török kori hódoltság legjelentősebb hazai emléke a mediterrán hangulatú pécsi főtéren."
-  },
-  {
-    id: "cur-18",
-    title: "Gyilkos-tó és a Hagymás-hegység",
+    title: "Gyilkos-tó hegyi útja",
     region: "Gyergyói-havasok, Erdély",
     lat: 46.7905,
     lng: 25.7925,
-    heading: 315,
+    heading: 310,
     pitch: 5,
-    description: "1837-ben hegyomlás által keletkezett természetes torlasztó, vízből kiálló megkövesedett fenyőcsonkokkal."
+    description: "A természetes gáttó partján kanyargó hegyi út, a vízből kiálló fatörzsek csonkjaival."
   },
   {
-    id: "cur-19",
-    title: "Selmecbánya (Banská Štiavnica) – Történelmi óváros",
-    region: "Selmeci-hegység, Felvidék (Szlovákia)",
-    lat: 48.4589,
-    lng: 18.8929,
-    heading: 170,
-    pitch: 0,
-    description: "Az egykori gazdag bányaváros festői, hegyoldalra épült reneszánsz és barokk palotái, UNESCO világörökség."
+    id: "cur-14",
+    title: "Pécs – Széchenyi tér",
+    region: "Mecsekalja / Pécs, Magyarország",
+    lat: 46.0772,
+    lng: 18.2284,
+    heading: 25,
+    pitch: 8,
+    description: "A mediterrán hangulatú pécsi főtér a Gázi Kászim pasa dzsámijával a Mecsek lankáin."
   },
   {
-    id: "cur-20",
-    title: "Pannonhalmi Főapátság",
-    region: "Sokorói-dombság, Magyarország",
-    lat: 47.5524,
-    lng: 17.7607,
-    heading: 190,
-    pitch: 10,
-    description: "996-ban alapított ezeréves bencés monostor a Szent Márton-hegy tetején."
+    id: "cur-15",
+    title: "Segesvári vár alatti középkori utca",
+    region: "Küküllő mente, Erdély",
+    lat: 46.2195,
+    lng: 24.7928,
+    heading: 205,
+    pitch: 8,
+    description: "Épségben fennmaradt középkori utcácska az erődített városfalak és bástyák tövében."
   },
   {
-    id: "cur-21",
-    title: "Péterváradi Vár (Petrovaradin)",
-    region: "Újvidék / Szerémség (Szerbia)",
-    lat: 45.2530,
-    lng: 19.8633,
-    heading: 300,
-    pitch: 2,
-    description: "A 'Duna Gibraltárja' erődítmény a fordított mutatójú óratoronnyal, szemben Újvidék városával."
-  },
-  {
-    id: "cur-22",
-    title: "Badacsony és a Szent György-hegy bazaltorgonái",
-    region: "Tapolcai-medence, Magyarország",
-    lat: 46.8402,
-    lng: 17.4478,
-    heading: 195,
-    pitch: 5,
-    description: "Vulkáni tanúhegyek, szőlőültetvények és a Balaton tükröződő víztükre a tanúhegyek tetejéről."
-  },
-  {
-    id: "cur-23",
-    title: "Árva vára (Oravský Hrad)",
-    region: "Árva vidéke, Észak-Felvidék (Szlovákia)",
+    id: "cur-16",
+    title: "Árva vára alatti közút (Oravský Podzámok)",
+    region: "Árva vidéke, Felvidék (Szlovákia)",
     lat: 49.2612,
     lng: 19.3585,
     heading: 75,
     pitch: 20,
-    description: "A 112 méter magas mészkősziklára merészen ráépített fellegvár az Árva folyó kanyarulatában."
+    description: "A 112 méter magas sziklaszirten álló 'sasfészek' fellegvár a folyóparti útról nézve."
   },
   {
-    id: "cur-24",
-    title: "Nagyszebeni Nagypiac (Piața Mare)",
+    id: "cur-17",
+    title: "Kopácsi-rét nemzeti parki út",
+    region: "Drávaszög / Baranya (Horvátország)",
+    lat: 45.6268,
+    lng: 18.7891,
+    heading: 110,
+    pitch: 0,
+    description: "A Duna és a Dráva árterének háborítatlan zöldje a Kárpát-medence déli kapujában."
+  },
+  {
+    id: "cur-18",
+    title: "Nagyszeben – Nagypiac (Piața Mare)",
     region: "Szászföld, Erdély",
     lat: 45.7967,
     lng: 24.1518,
-    heading: 130,
+    heading: 135,
     pitch: 5,
-    description: "Az erdélyi szászok történelmi központja, a házak tetőin jellegzetes 'figyelő szemekkel'."
+    description: "Az erdélyi szászok történelmi főtere, a jellegzetes szem alakú tetőablakokkal díszített házakkal."
   },
   {
-    id: "cur-25",
-    title: "Tokaj – A Tisza és a Bodrog torkolata",
-    region: "Zemplén / Hegyalja, Magyarország",
-    lat: 48.1187,
-    lng: 21.4132,
-    heading: 110,
+    id: "cur-19",
+    title: "Dobogókő – Eötvös Loránd menedékház előtti kilátó",
+    region: "Visegrádi-hegység, Magyarország",
+    lat: 47.7195,
+    lng: 18.8995,
+    heading: 350,
     pitch: 0,
-    description: "A világhírű tokaji borvidék szíve, ahol a Bodrog a Tiszába ömlik a Kopasz-hegy lábánál."
+    description: "A magyar természetjárás bölcsője, kilátással a Prédikálószékre és a Dunakanyarra."
+  },
+  {
+    id: "cur-20",
+    title: "Tokaj – Bodrog-híd és a Kopasz-hegy lába",
+    region: "Tokaj-Hegyalja, Magyarország",
+    lat: 48.1215,
+    lng: 21.4110,
+    heading: 115,
+    pitch: 0,
+    description: "A világhírű borvidék központja a Bodrog folyó partján, a Kopasz-hegy tövében."
   }
 ];
