@@ -73,6 +73,54 @@ export function getRandomCarpathianPoint() {
 }
 
 /**
+ * Kárpát-medencei nagyvárosok listája a 3. körhöz
+ * Lefedi az összes történelmi és földrajzi régió legfontosabb központjait
+ */
+export const CARPATHIAN_MAJOR_CITIES = [
+  { name: "Budapest", region: "Közép-Magyarország", lat: 47.4979, lng: 19.0402, radiusKm: 6.0 },
+  { name: "Kolozsvár (Cluj-Napoca)", region: "Erdély", lat: 46.7712, lng: 23.6236, radiusKm: 4.5 },
+  { name: "Pozsony (Bratislava)", region: "Felvidék", lat: 48.1486, lng: 17.1077, radiusKm: 4.5 },
+  { name: "Temesvár (Timișoara)", region: "Bánság", lat: 45.7537, lng: 21.2257, radiusKm: 4.0 },
+  { name: "Debrecen", region: "Észak-Alföld, Magyarország", lat: 47.5316, lng: 21.6273, radiusKm: 4.0 },
+  { name: "Kassa (Košice)", region: "Felvidék", lat: 48.7164, lng: 21.2611, radiusKm: 4.0 },
+  { name: "Szeged", region: "Dél-Alföld, Magyarország", lat: 46.2530, lng: 20.1414, radiusKm: 3.5 },
+  { name: "Brassó (Brașov)", region: "Erdély", lat: 45.6579, lng: 25.6012, radiusKm: 4.0 },
+  { name: "Pécs", region: "Dél-Dunántúl, Magyarország", lat: 46.0727, lng: 18.2323, radiusKm: 3.5 },
+  { name: "Győr", region: "Nyugat-Dunántúl, Magyarország", lat: 47.6875, lng: 17.6504, radiusKm: 3.5 },
+  { name: "Nagyvárad (Oradea)", region: "Partium", lat: 47.0465, lng: 21.9189, radiusKm: 3.5 },
+  { name: "Miskolc", region: "Észak-Magyarország", lat: 48.1035, lng: 20.7784, radiusKm: 4.0 },
+  { name: "Szabadka (Subotica)", region: "Vajdaság", lat: 46.1005, lng: 19.6653, radiusKm: 3.5 },
+  { name: "Újvidék (Novi Sad)", region: "Vajdaság", lat: 45.2671, lng: 19.8335, radiusKm: 4.0 },
+  { name: "Marosvásárhely (Târgu Mureș)", region: "Székelyföld / Erdély", lat: 46.5456, lng: 24.5625, radiusKm: 3.5 },
+  { name: "Nagyszeben (Sibiu)", region: "Erdély", lat: 45.7983, lng: 24.1256, radiusKm: 3.5 },
+  { name: "Arad", region: "Partium / Bánság", lat: 46.1866, lng: 21.3123, radiusKm: 3.5 },
+  { name: "Székesfehérvár", region: "Közép-Dunántúl, Magyarország", lat: 47.1860, lng: 18.4221, radiusKm: 3.5 },
+  { name: "Nyíregyháza", region: "Észak-Alföld, Magyarország", lat: 47.9554, lng: 21.7167, radiusKm: 3.5 },
+  { name: "Ungvár (Uzhhorod)", region: "Kárpátalja", lat: 48.6208, lng: 22.2879, radiusKm: 3.0 },
+  { name: "Eszék (Osijek)", region: "Drávaszög / Szlavónia", lat: 45.5550, lng: 18.6955, radiusKm: 3.5 },
+  { name: "Kismarton (Eisenstadt)", region: "Burgenland", lat: 47.8457, lng: 16.5253, radiusKm: 2.5 },
+  { name: "Besztercebánya (Banská Bystrica)", region: "Felvidék", lat: 48.7363, lng: 19.1462, radiusKm: 3.5 },
+  { name: "Zsolna (Žilina)", region: "Felvidék", lat: 49.2231, lng: 18.7394, radiusKm: 3.5 },
+];
+
+/**
+ * Véletlenszerű pont generálása egy kiválasztott Kárpát-medencei nagyváros területén
+ */
+export function getRandomCityCandidate() {
+  const city = CARPATHIAN_MAJOR_CITIES[Math.floor(Math.random() * CARPATHIAN_MAJOR_CITIES.length)];
+  const angle = Math.random() * Math.PI * 2;
+  const distKm = Math.random() * city.radiusKm;
+  const latOffset = (Math.cos(angle) * distKm) / 111;
+  const lngOffset = (Math.sin(angle) * distKm) / 75;
+
+  return {
+    city,
+    lat: city.lat + latOffset,
+    lng: city.lng + lngOffset,
+  };
+}
+
+/**
  * Kurált kültéri helyszínek a Kárpát-medence ikonikus tájairól
  * Kizárólag KÜLTÉRI KÖZUTAK és KILÁTÓK, garantált Street View bejárhatósággal (nem szállodák/épületbelsők!)
  */

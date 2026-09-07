@@ -92,7 +92,7 @@ export default function App() {
         currentRound={currentRoundIndex + 1}
         totalRounds={rounds.length || 5}
         totalScore={totalScore}
-        isCurated={currentRound?.isCurated}
+        roundType={currentRound?.roundType || (currentRoundIndex < 2 ? 'curated' : currentRoundIndex === 2 ? 'city' : 'random')}
         onRestartGame={startNewGame}
         onOpenLeaderboard={() => setShowLeaderboard(true)}
         onOpenRules={() => setShowRules(true)}

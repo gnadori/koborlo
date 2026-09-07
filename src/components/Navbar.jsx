@@ -6,7 +6,7 @@ export default function Navbar({
   currentRound, 
   totalRounds = 5, 
   totalScore, 
-  isCurated, 
+  roundType = 'curated', 
   onRestartGame, 
   onOpenLeaderboard, 
   onOpenRules, 
@@ -45,12 +45,17 @@ export default function Navbar({
 
         <div className="h-4 w-px bg-white/10" />
 
-        {/* Kör típus jelző: 1-2 kurált, 3-5 random */}
+        {/* Kör típus jelző: 1-2 kurált, 3 nagyváros, 4-5 random */}
         <div className="flex items-center gap-1 text-[11px] font-medium">
-          {isCurated ? (
+          {roundType === 'curated' ? (
             <span className="inline-flex items-center gap-1 text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
               Kurált helyszín
+            </span>
+          ) : roundType === 'city' ? (
+            <span className="inline-flex items-center gap-1 text-purple-300 bg-purple-400/10 px-2 py-0.5 rounded-full border border-purple-400/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+              Nagyváros
             </span>
           ) : (
             <span className="inline-flex items-center gap-1 text-cyan-300 bg-cyan-400/10 px-2 py-0.5 rounded-full border border-cyan-400/20">

@@ -1,7 +1,7 @@
 /**
  * Street View betöltő és Kárpát-medencei helyszínsorsoló szolgáltatás
  */
-import { CURATED_LOCATIONS, getRandomCarpathianPoint } from '../data/carpathianBasin';
+import { CURATED_LOCATIONS, getRandomCarpathianPoint, getRandomCityCandidate } from '../data/carpathianBasin';
 
 let googleMapsPromise = null;
 
@@ -123,6 +123,7 @@ export async function findRandomCarpathianPanorama(maxAttempts = 16) {
       return {
         ...pano,
         isCurated: false,
+        roundType: 'random',
         title: 'Felfedezetlen Kóborlás',
         region: 'Kárpát-medence'
       };
@@ -139,20 +140,56 @@ export async function findRandomCarpathianPanorama(maxAttempts = 16) {
     title: fallback.title,
     region: fallback.region,
     description: fallback.description,
-    isCurated: false
+    isCurated: false,
+    roundType: 'random'
+  };
+}
+
+/**
+ * Véletlenszerű Kárpát-medencei nagyváros bejárható pontjának keresése (3. kör)
+ */
+export async function findRandomCityPanorama(maxAttempts = 12) {
+  for (let i = 0; i < maxAttempts; i++) {
+    const candidate = getRandomCityCandidate();
+    try {
+      // A nagyváros központja körül 1.5 km-en belül bejárható utcát keresünk
+      const pano = await findNearestPanorama(candidate.lat, candidate.lng, 1500, true);
+      return {
+        ...pano,
+        isCurated: false,
+        roundType: 'city',
+        title: `Nagyváros: ${candidate.city.name}`,
+        region: candidate.city.region,
+        description: `Kárpát-medencei nagyváros: ${candidate.city.name} (${candidate.city.region})`
+      };
+    } catch (err) {
+      // Következő várospróbálkozás
+    }
+  }
+
+  // Tartalék nagyváros (Budapest Lánchíd környéke)
+  return {
+    lat: 47.4985,
+    lng: 19.0435,
+    isCurated: false,
+    roundType: 'city',
+    title: 'Nagyváros: Budapest',
+    region: 'Közép-Magyarország',
+    description: 'Kárpát-medencei nagyváros: Budapest'
   };
 }
 
 /**
  * Egy teljes 5 körös játék helyszíneinek előkészítése
- * 1. és 2. kör: Kurált, kültéri nevezetes helyszínek (nem szállodák!)
- * 3., 4. és 5. kör: Dinamikusan generált, mozgatható/bejárható random közutak
+ * 1. és 2. kör: Kurált, kültéri nevezetes helyszínek (természeti és történelmi tájak)
+ * 3. kör: Kárpát-medencei NAGYVÁROS (Budapest, Kolozsvár, Pozsony, Kassa, Szeged, Temesvár stb.)
+ * 4. és 5. kör: Teljesen random, mozgatható/bejárható Kárpát-medencei közutak
  */
 export async function generateGameRounds() {
   const rounds = [];
   const hasApiKey = !!getGoogleMapsApiKey();
   
-  // 1. Két véletlenszerű, különböző kurált helyszín kiválasztása
+  // 1. Két véletlenszerű kurált helyszín (1. és 2. kör)
   const shuffledCurated = [...CURATED_LOCATIONS].sort(() => 0.5 - Math.random());
   const selectedCurated = shuffledCurated.slice(0, 2);
 
@@ -162,7 +199,6 @@ export async function generateGameRounds() {
 
     if (hasApiKey) {
       try {
-        // Kültéri Street View panoráma pontosítása 400m-en belül
         panoInfo = await findNearestPanorama(cur.lat, cur.lng, 400, false);
       } catch (e) {
         console.warn('Nem sikerült kültéri panorámát illeszteni:', cur.title);
@@ -172,6 +208,7 @@ export async function generateGameRounds() {
     rounds.push({
       roundNumber: i + 1,
       isCurated: true,
+      roundType: 'curated',
       lat: panoInfo ? panoInfo.lat : cur.lat,
       lng: panoInfo ? panoInfo.lng : cur.lng,
       panoId: panoInfo ? panoInfo.panoId : undefined,
@@ -183,14 +220,53 @@ export async function generateGameRounds() {
     });
   }
 
-  // 2. Három dinamikus random bejárható helyszín keresése (3., 4., 5. kör)
-  for (let r = 3; r <= 5; r++) {
+  // 2. Harmadik kör: Kárpát-medencei Nagyváros (3. kör)
+  let cityRound = null;
+  if (hasApiKey) {
+    try {
+      cityRound = await findRandomCityPanorama(12);
+    } catch (e) {
+      console.warn('Nem sikerült nagyvárosi panorámát találni:', e);
+    }
+  }
+
+  if (!cityRound) {
+    // Tartalék kurált nagyváros (Szabadka vagy Kassa)
+    const backupCity = CURATED_LOCATIONS.find(l => l.title.includes('Kassa') || l.title.includes('Szabadka')) || CURATED_LOCATIONS[2];
+    cityRound = {
+      lat: backupCity.lat,
+      lng: backupCity.lng,
+      title: backupCity.title,
+      region: backupCity.region,
+      description: backupCity.description,
+      isCurated: false,
+      roundType: 'city'
+    };
+  }
+
+  rounds.push({
+    roundNumber: 3,
+    isCurated: false,
+    roundType: 'city',
+    lat: cityRound.lat,
+    lng: cityRound.lng,
+    panoId: cityRound.panoId,
+    heading: Math.floor(Math.random() * 360),
+    pitch: 0,
+    title: cityRound.title,
+    region: cityRound.region,
+    description: cityRound.description
+  });
+
+  // 3. Negyedik és ötödik kör: Teljesen véletlenszerű Kárpát-medencei pontok (4. és 5. kör)
+  for (let r = 4; r <= 5; r++) {
     if (hasApiKey) {
       try {
         const randomPano = await findRandomCarpathianPanorama(16);
         rounds.push({
           roundNumber: r,
           isCurated: false,
+          roundType: 'random',
           lat: randomPano.lat,
           lng: randomPano.lng,
           panoId: randomPano.panoId,
@@ -198,7 +274,7 @@ export async function generateGameRounds() {
           pitch: 0,
           title: `Kóborló Helyszín #${r}`,
           region: 'Kárpát-medence',
-          description: randomPano.description || 'Véletlenszerű Kárpát-medencei pont.'
+          description: randomPano.description || 'Véletlenszerű Kárpát-medencei táj.'
         });
         continue;
       } catch (e) {
@@ -207,10 +283,11 @@ export async function generateGameRounds() {
     }
 
     // Tartalék
-    const backupCurated = shuffledCurated[r - 1] || CURATED_LOCATIONS[r % CURATED_LOCATIONS.length];
+    const backupCurated = shuffledCurated[r] || CURATED_LOCATIONS[r % CURATED_LOCATIONS.length];
     rounds.push({
       roundNumber: r,
       isCurated: false,
+      roundType: 'random',
       lat: backupCurated.lat,
       lng: backupCurated.lng,
       heading: backupCurated.heading || Math.floor(Math.random() * 360),

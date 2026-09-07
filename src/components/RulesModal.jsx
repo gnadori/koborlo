@@ -47,12 +47,15 @@ export default function RulesModal({ onClose }) {
               <Sparkles className="w-4 h-4" />
               <span>A körök felépítése</span>
             </div>
-            <ul className="list-disc list-inside space-y-1 text-slate-300">
+            <ul className="list-disc list-inside space-y-1.5 text-slate-300">
               <li>
-                <strong className="text-white">1. és 2. kör:</strong> Kézzel válogatott, ikonikus <em>kurált helyszínek</em> (hegyvidékek, történelmi várak, folyópartok, híres városok).
+                <strong className="text-white">1. és 2. kör:</strong> Kézzel válogatott, ikonikus <em>kurált helyszínek</em> (hegyvidékek, természeti csodák, történelmi várak, folyópartok).
               </li>
               <li>
-                <strong className="text-white">3., 4. és 5. kör:</strong> Teljesen <em>véletlenszerűen generált valódi pontok</em> a Kárpát-medence határain belül.
+                <strong className="text-white">3. kör:</strong> Kárpát-medencei <em>nagyváros</em> (pl. Budapest, Kolozsvár, Pozsony, Kassa, Temesvár, Szeged, Pécs, Brassó, Nagyvárad stb.).
+              </li>
+              <li>
+                <strong className="text-white">4. és 5. kör:</strong> Teljesen <em>véletlenszerűen generált kültéri utak</em> a Kárpát-medence határain belül.
               </li>
             </ul>
           </div>
