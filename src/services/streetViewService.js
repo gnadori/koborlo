@@ -5,12 +5,14 @@ import { CURATED_LOCATIONS, getRandomCarpathianPoint } from '../data/carpathianB
 
 let googleMapsPromise = null;
 
-// Aktuális API kulcs lekérése (környezeti változóból vagy böngésző tárolóból)
+const DEFAULT_GOOGLE_MAPS_KEY = 'AIzaSyBf738xF8Jhqgn-UsbWEiSTQQBQMR56n0o';
+
+// Aktuális API kulcs lekérése (környezeti változóból, böngésző tárolóból vagy alapértelmezettből)
 export function getGoogleMapsApiKey() {
   return (
     localStorage.getItem('koborlo_google_maps_key') ||
     import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    ''
+    DEFAULT_GOOGLE_MAPS_KEY
   );
 }
 

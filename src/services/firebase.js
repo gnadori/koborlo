@@ -14,7 +14,16 @@ import {
   serverTimestamp 
 } from 'firebase/firestore';
 
-// Alapértelmezett Firebase konfiguráció olvasása környezeti változókból vagy localStorage-ból
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBF2qod8mdoNZMtnYZfqPzUC4d1WxjLYT4",
+  authDomain: "koborlo-75eb5.firebaseapp.com",
+  projectId: "koborlo-75eb5",
+  storageBucket: "koborlo-75eb5.firebasestorage.app",
+  messagingSenderId: "421970099233",
+  appId: "1:421970099233:web:a6d9e8425f55535f6cb760",
+};
+
+// Alapértelmezett Firebase konfiguráció olvasása környezeti változókból, localStorage-ból vagy alapértelmezettből
 export function getFirebaseConfig() {
   const saved = localStorage.getItem('koborlo_firebase_config');
   if (saved) {
@@ -36,7 +45,7 @@ export function getFirebaseConfig() {
     };
   }
 
-  return null;
+  return DEFAULT_FIREBASE_CONFIG;
 }
 
 export function saveFirebaseConfig(configObj) {
